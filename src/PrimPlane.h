@@ -29,13 +29,14 @@ public:
 		float t = (m_origin - ray.org).dot(m_normal) / ray.dir.dot(m_normal);
 		if (t < Epsilon || t > ray.t) return false;
 		ray.t = t;
+		ray.hit = this;
 		return true;
 	}
 	
 	virtual Vec3f GetNormal(const Ray& ray) const override
 	{
 		// --- PUT YOUR CODE HERE ---
-		return Vec3f();
+		return normalize(m_normal);
 	}
 	
 private:

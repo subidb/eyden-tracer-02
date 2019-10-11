@@ -50,17 +50,18 @@ public:
 		}
 		
 		ray.t = dist;
+		ray.hit = this;
 		return true;
 	}
 	
 	virtual Vec3f GetNormal(const Ray& ray) const override
 	{
 		// --- PUT YOUR CODE HERE ---
-		return Vec3f();
+		Vec3f normal = (ray.org + ray.t * ray.dir) - m_center;
+		return normalize(normal);
 	}
 	
 private:
 	Vec3f m_center;	///< Position of the center of the sphere
 	float m_radius;	///< Radius of the sphere
 };
-

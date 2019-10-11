@@ -26,12 +26,25 @@ public:
 		, m_e2(p3 - p0)
 	{ 
 		// --- PUT YOUR CODE HERE ---
+		//Calculation of area and normal 
+		m_normal = normalize(m_e1.cross(m_e2));
+		float area = (cv::norm(m_e1.cross(m_e2))/2) + (cv::norm((p1 - p2).cross(p3 - p2))/2);
+		m_area = area; 
 	}  
 
 	virtual std::optional<Vec3f> Illuminate(Ray& ray) override
 	{
 		// --- PUT YOUR CODE HERE ---
-		return Vec3f();
+		//generating random positions on the area light
+		float rand1 = DirectGraphicalModels::random::U<float>(0,1);
+		float rand2 = DirectGraphicalModels::random::U<float>(0,1);
+
+		//formula for direction and intensity of the reflected ray
+		Vec3f pos = (m_p0 + m_e1 * rand1) + (m_p0 + m_e2 * rand2);
+		Vec3f direction = pos - ray.org;
+		Vec3f intensity = m_intensity/pow(cv::norm(direction),2);
+		ray.dir = normalize(direction);
+		return normalize(intensity);
 	}
 
 	Vec3f GetNormal(const Vec3f& position) const { return m_normal; }

@@ -65,4 +65,3 @@ private:
 	Vec3f m_zAxis;
 	float m_aspect;		///< image aspect ratio
 };
-
